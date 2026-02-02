@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="1260" viewBox="0 0 900 1260">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1b1b1b" />
+      <stop offset="60%" stop-color="#4d4a40" />
+      <stop offset="100%" stop-color="#7f5539" />
+    </linearGradient>
+  </defs>
+  <rect width="900" height="1260" fill="url(#bg)" />
+  <rect x="110" y="140" width="680" height="820" rx="40" fill="#1f2d16" opacity="0.65" />
+  <path d="M220 840 L450 240 L680 840" fill="none" stroke="#e9d8a6" stroke-width="26" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M300 840 L450 420 L600 840" fill="none" stroke="#f4f1de" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+  <g fill="#ddb892" opacity="0.7">
+    <circle cx="230" cy="270" r="6" />
+    <circle cx="660" cy="330" r="4" />
+    <circle cx="560" cy="420" r="5" />
+  </g>
+  <text x="90" y="1180" fill="#fefae0" font-size="38" font-family="'Trebuchet MS', sans-serif" letter-spacing="5">IRONWOOD KNIGHT</text>
+</svg>
