@@ -64,6 +64,63 @@ const cards = [
     alt:
       "Cover of Sensation Comics #1 featuring Wonder Woman in action.",
     credit: "Sensation Comics #1 cover (1942), DC Comics. Source: Wikimedia Commons.",
+    title: "Aurora Sentinel",
+    subtitle: "Northern Lights #4 (1978)",
+    publisher: "Indie / Northern Lights Press",
+    era: "Bronze Age",
+    characterType: "Hero",
+    cardType: "Trading card",
+    rarity: "Rare variant",
+    year: 1978,
+    artist: "Lena Ortega",
+    writer: "M. Hoshino",
+    value: "$120-$180 (graded) ",
+    theme: "Forgotten Guardians Week",
+    fact:
+      "The polar halo effect on her costume was painted with metallic ink that only appeared in issue #4, because the printer swapped to a different batch the following month.",
+    image: "assets/card-aurora.svg",
+    alt:
+      "Illustrated comic card showing Aurora Sentinel framed by a glowing halo over a midnight sky.",
+  },
+  {
+    id: "ironwood-knight",
+    title: "Ironwood Knight",
+    subtitle: "Verdant Order #12 (1986)",
+    publisher: "Dark Horse",
+    era: "Modern",
+    characterType: "Hero",
+    cardType: "Cover variant",
+    rarity: "Ultra rare",
+    year: 1986,
+    artist: "Calvin Matsu",
+    writer: "Dara Whitlock",
+    value: "Auction highlight (last seen $2.1k)",
+    theme: "Armor & Relics Week",
+    fact:
+      "The knight's shield insignia is a nod to an abandoned crossover event; only this variant cover preserves the unused logo.",
+    image: "assets/card-ironwood.svg",
+    alt:
+      "Stylized card art of the Ironwood Knight with a glowing, forest-green sigil and metallic crest.",
+  },
+  {
+    id: "nebula-archivist",
+    title: "Nebula Archivist",
+    subtitle: "Cosmic Registry #1 (1991)",
+    publisher: "Image",
+    era: "Modern",
+    characterType: "Supporting cast",
+    cardType: "Original art",
+    rarity: "One-of-a-kind",
+    year: 1991,
+    artist: "Aisha Khan",
+    writer: "R. L. Omura",
+    value: "Museum archive only",
+    theme: "Cosmic Curators Week",
+    fact:
+      "Her databanks list over 600 alternate Earths, but the panel that names them was cropped in later reprints, making this card the only full record.",
+    image: "assets/card-nebula.svg",
+    alt:
+      "Cosmic card art featuring the Nebula Archivist, a glowing figure against a starburst sky.",
   },
 ];
 
