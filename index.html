@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Card of the Day</title>
+    <link rel="manifest" href="manifest.json" />
+    <link rel="stylesheet" href="styles.css" />
+    <meta name="theme-color" content="#0b0f1a" />
+  </head>
+  <body>
+    <header class="top-bar">
+      <div>
+        <p class="eyebrow">Daily Comic Deep Cut</p>
+        <h1>Card of the Day</h1>
+      </div>
+      <div class="streak" aria-live="polite">
+        <p class="streak__label">Streak</p>
+        <p class="streak__count" id="streakCount">0 days</p>
+        <p class="streak__milestone" id="streakMilestone">Next: 7-day reward</p>
+      </div>
+    </header>
+
+    <main>
+      <section class="card-stage">
+        <div class="card-shell" id="cardShell">
+          <div class="skeleton" id="cardSkeleton" aria-hidden="true">
+            <div class="skeleton__image"></div>
+            <div class="skeleton__line"></div>
+            <div class="skeleton__line short"></div>
+          </div>
+          <button class="card" id="card" aria-pressed="false">
+            <div class="card__face card__front" id="cardFront">
+              <img id="cardImage" alt="" />
+              <div class="card__front-overlay">
+                <p class="card__title" id="cardTitle">Loading...</p>
+                <p class="card__subtitle" id="cardSubtitle"></p>
+              </div>
+            </div>
+            <div class="card__face card__back" id="cardBack">
+              <div class="card__back-content">
+                <h2 id="cardFactTitle">Did you know?</h2>
+                <p id="cardFact"></p>
+                <div class="card__meta" id="cardMeta"></div>
+                <div class="card__links" id="cardLinks"></div>
+              </div>
+            </div>
+          </button>
+        </div>
+        <div class="card-actions">
+          <button class="button" id="flipButton">Flip for trivia</button>
+          <button class="button ghost" id="shareButton">Share card</button>
+          <button class="button ghost" id="textSizeButton">A+</button>
+        </div>
+        <div class="collection-actions">
+          <button class="chip" id="ownButton">Mark as owned</button>
+          <button class="chip" id="wishlistButton">Add to wishlist</button>
+        </div>
+      </section>
+
+      <section class="details-grid">
+        <div class="panel">
+          <h3>Today’s Focus</h3>
+          <ul id="cardDetails"></ul>
+        </div>
+        <div class="panel">
+          <div class="panel__header">
+            <h3>Preferences</h3>
+            <button class="link" id="resetPreferences">Reset</button>
+          </div>
+          <div class="preferences" id="preferences"></div>
+        </div>
+        <div class="panel">
+          <h3>Collection Tracker</h3>
+          <p class="muted">Build your personal archive as you check in each day.</p>
+          <div class="collection-summary" id="collectionSummary"></div>
+        </div>
+      </section>
+
+      <section class="archive">
+        <div class="archive__header">
+          <h3>Archive & Search</h3>
+          <input
+            type="search"
+            id="archiveSearch"
+            placeholder="Search by character, artist, year, publisher"
+            aria-label="Search the card archive"
+          />
+        </div>
+        <div class="archive__filters" id="archiveFilters"></div>
+        <div class="archive__list" id="archiveList"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Artwork sourced from Wikimedia Commons for demo purposes. Verify licensing before
+        production use.
+      </p>
+      <p class="muted">Offline-ready • Accessible alt text • Preloaded for tomorrow</p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
