@@ -106,6 +106,11 @@ const preferences = document.getElementById("preferences");
 const resetPreferences = document.getElementById("resetPreferences");
 const streakCount = document.getElementById("streakCount");
 const streakMilestone = document.getElementById("streakMilestone");
+const colorLabStage = document.getElementById("colorLabStage");
+const primaryOrb = document.getElementById("primaryOrb");
+const secondaryOrb = document.getElementById("secondaryOrb");
+const swatchGrid = document.getElementById("swatchGrid");
+const ambientGlow = document.getElementById("ambientGlow");
 
 const storage = {
   get(key, fallback) {
@@ -395,6 +400,151 @@ const registerServiceWorker = () => {
   }
 };
 
+const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+
+const parseHex = (hex) => {
+  const clean = hex.replace("#", "");
+  const bigint = Number.parseInt(clean, 16);
+  return {
+    r: (bigint >> 16) & 255,
+    g: (bigint >> 8) & 255,
+    b: bigint & 255,
+  };
+};
+
+const rgbToHex = ({ r, g, b }) =>
+  `#${[r, g, b]
+    .map((channel) => clamp(Math.round(channel), 0, 255).toString(16).padStart(2, "0"))
+    .join("")}`;
+
+const mixColors = (a, b, weight = 0.5) => {
+  const from = parseHex(a);
+  const to = parseHex(b);
+  return rgbToHex({
+    r: from.r + (to.r - from.r) * weight,
+    g: from.g + (to.g - from.g) * weight,
+    b: from.b + (to.b - from.b) * weight,
+  });
+};
+
+const hslToHex = (h, s, l) => {
+  const sat = s / 100;
+  const light = l / 100;
+  const chroma = (1 - Math.abs(2 * light - 1)) * sat;
+  const hueSection = h / 60;
+  const x = chroma * (1 - Math.abs((hueSection % 2) - 1));
+  let [r, g, b] = [0, 0, 0];
+
+  if (hueSection >= 0 && hueSection < 1) [r, g, b] = [chroma, x, 0];
+  else if (hueSection < 2) [r, g, b] = [x, chroma, 0];
+  else if (hueSection < 3) [r, g, b] = [0, chroma, x];
+  else if (hueSection < 4) [r, g, b] = [0, x, chroma];
+  else if (hueSection < 5) [r, g, b] = [x, 0, chroma];
+  else [r, g, b] = [chroma, 0, x];
+
+  const m = light - chroma / 2;
+  return rgbToHex({
+    r: (r + m) * 255,
+    g: (g + m) * 255,
+    b: (b + m) * 255,
+  });
+};
+
+const renderSwatches = (palette) => {
+  swatchGrid.innerHTML = palette
+    .map(
+      ({ label, color }) => `
+      <article class="swatch">
+        <div class="swatch__color" style="background:${color}"></div>
+        <p class="swatch__label">${label}: ${color}</p>
+      </article>
+    `
+    )
+    .join("");
+};
+
+const setupColorLab = () => {
+  if (!colorLabStage || !primaryOrb || !secondaryOrb || !swatchGrid || !ambientGlow) return;
+
+  const state = {
+    primary: { x: 0.30, y: 0.43 },
+    secondary: { x: 0.65, y: 0.30 },
+    dragging: null,
+  };
+
+  const positionOrb = (orb, point, bounds) => {
+    orb.style.left = `${point.x * bounds.width}px`;
+    orb.style.top = `${point.y * bounds.height}px`;
+  };
+
+  const updatePalette = () => {
+    const dx = state.secondary.x - state.primary.x;
+    const dy = state.secondary.y - state.primary.y;
+    const angle = (Math.atan2(dy, dx) * 180) / Math.PI;
+    const hueA = (angle + 360) % 360;
+    const distance = clamp(Math.hypot(dx, dy), 0.1, 0.9);
+    const hueB = (hueA + 120 + distance * 100) % 360;
+    const hueC = (hueA + 240 - distance * 40) % 360;
+
+    const primary = hslToHex(hueA, 84, 56);
+    const secondary = hslToHex(hueB, 84, 52);
+    const accentSoft = hslToHex(hueC, 70, 64);
+    const ambient = mixColors(primary, secondary, 0.4);
+
+    document.documentElement.style.setProperty("--accent", primary);
+    document.documentElement.style.setProperty("--accent-strong", secondary);
+    document.documentElement.style.setProperty("--accent-soft", accentSoft);
+    document.documentElement.style.setProperty("--ambient-color", `${ambient}80`);
+
+    primaryOrb.style.background = primary;
+    secondaryOrb.style.background = secondary;
+    ambientGlow.style.background = `radial-gradient(circle at ${state.primary.x * 100}% ${state.primary.y * 100}%, ${primary}75 0%, transparent 58%),
+      radial-gradient(circle at ${state.secondary.x * 100}% ${state.secondary.y * 100}%, ${secondary}75 0%, transparent 62%)`;
+
+    renderSwatches([
+      { label: "Primary", color: primary },
+      { label: "Secondary", color: secondary },
+      { label: "Soft glow", color: accentSoft },
+      { label: "Blend", color: ambient },
+    ]);
+  };
+
+  const updatePointer = (event) => {
+    if (!state.dragging) return;
+    const bounds = colorLabStage.getBoundingClientRect();
+    const x = clamp((event.clientX - bounds.left) / bounds.width, 0.08, 0.92);
+    const y = clamp((event.clientY - bounds.top) / bounds.height, 0.08, 0.92);
+    state[state.dragging] = { x, y };
+    positionOrb(primaryOrb, state.primary, bounds);
+    positionOrb(secondaryOrb, state.secondary, bounds);
+    updatePalette();
+  };
+
+  const stopDrag = () => {
+    state.dragging = null;
+  };
+
+  const startDrag = (key) => (event) => {
+    state.dragging = key;
+    event.preventDefault();
+  };
+
+  const bounds = colorLabStage.getBoundingClientRect();
+  positionOrb(primaryOrb, state.primary, bounds);
+  positionOrb(secondaryOrb, state.secondary, bounds);
+  updatePalette();
+
+  primaryOrb.addEventListener("pointerdown", startDrag("primary"));
+  secondaryOrb.addEventListener("pointerdown", startDrag("secondary"));
+  window.addEventListener("pointermove", updatePointer);
+  window.addEventListener("pointerup", stopDrag);
+  window.addEventListener("resize", () => {
+    const newBounds = colorLabStage.getBoundingClientRect();
+    positionOrb(primaryOrb, state.primary, newBounds);
+    positionOrb(secondaryOrb, state.secondary, newBounds);
+  });
+};
+
 const init = () => {
   const cardData = getCardOfDay();
   applyCard(cardData);
@@ -406,6 +556,7 @@ const init = () => {
   updateCollectionSummary();
   setupSharing(cardData);
   registerServiceWorker();
+  setupColorLab();
 
   card.addEventListener("click", toggleFlip);
   flipButton.addEventListener("click", toggleFlip);
