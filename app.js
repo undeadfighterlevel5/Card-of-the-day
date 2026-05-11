@@ -1,6 +1,69 @@
 const cards = [
   {
     id: "aurora-sentinel",
+    title: "Action Comics #1",
+    subtitle: "June 1938 • Superman debuts",
+    publisher: "DC Comics",
+    era: "Golden Age",
+    characterType: "Hero",
+    cardType: "Cover",
+    rarity: "Historic issue",
+    year: 1938,
+    artist: "Joe Shuster",
+    writer: "Jerry Siegel",
+    value: "Collector grail (multi-million dollar sales)",
+    theme: "Golden Age Foundations",
+    fact:
+      "Action Comics #1 is widely recognized as Superman's debut and the cover's car-lifting scene became one of the most iconic images in comic history.",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/5/5a/Action_Comics_1.jpg",
+    alt:
+      "Cover of Action Comics #1 featuring a costumed hero lifting a green car.",
+    credit: "Action Comics #1 cover (1938), DC Comics. Source: Wikimedia Commons.",
+  },
+  {
+    id: "ironwood-knight",
+    title: "Detective Comics #27",
+    subtitle: "May 1939 • Batman debuts",
+    publisher: "DC Comics",
+    era: "Golden Age",
+    characterType: "Hero",
+    cardType: "Cover",
+    rarity: "Historic issue",
+    year: 1939,
+    artist: "Bob Kane",
+    writer: "Bill Finger",
+    value: "Collector grail (multi-million dollar sales)",
+    theme: "Golden Age Foundations",
+    fact:
+      "Detective Comics #27 introduced Batman, marking the first appearance of the Dark Knight and launching a decades-spanning legacy.",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/4/4f/Detective_Comics_27.jpg",
+    alt:
+      "Cover of Detective Comics #27 featuring Batman carrying a figure across rooftops.",
+    credit: "Detective Comics #27 cover (1939), DC Comics. Source: Wikimedia Commons.",
+  },
+  {
+    id: "nebula-archivist",
+    title: "Sensation Comics #1",
+    subtitle: "January 1942 • Wonder Woman debuts",
+    publisher: "DC Comics",
+    era: "Golden Age",
+    characterType: "Hero",
+    cardType: "Cover",
+    rarity: "Historic issue",
+    year: 1942,
+    artist: "H. G. Peter",
+    writer: "William Moulton Marston",
+    value: "Collector grail (high six-figure sales)",
+    theme: "Golden Age Foundations",
+    fact:
+      "Sensation Comics #1 marks Wonder Woman's first starring cover and helped cement her as a cultural icon in early 1940s comics.",
+    image:
+      "https://upload.wikimedia.org/wikipedia/commons/4/4a/Sensation_Comics_1.jpg",
+    alt:
+      "Cover of Sensation Comics #1 featuring Wonder Woman in action.",
+    credit: "Sensation Comics #1 cover (1942), DC Comics. Source: Wikimedia Commons.",
     title: "Aurora Sentinel",
     subtitle: "Northern Lights #4 (1978)",
     publisher: "Indie / Northern Lights Press",
@@ -162,6 +225,7 @@ const buildMeta = (cardData) => {
     `Writer: ${cardData.writer}`,
     `Rarity: ${cardData.rarity}`,
     `Value: ${cardData.value}`,
+    `Artwork credit: ${cardData.credit}`,
   ];
   cardMeta.innerHTML = items
     .map((item) => `<span>${item}</span>`)
