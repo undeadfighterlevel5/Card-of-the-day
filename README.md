@@ -4,6 +4,7 @@ A lightweight, mobile-first "card of the day" experience that spotlights deep-cu
 
 ## Highlights
 - Daily card reveal with a flip animation for trivia.
+- Interactive color alignment studio with draggable control points that remap the UI palette in real time.
 - Preferences for publishers, eras, character types, and card types.
 - Collection tracking (owned + wishlist) stored locally.
 - Archive search with filters for publisher and era.

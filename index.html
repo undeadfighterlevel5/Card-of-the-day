@@ -58,6 +58,20 @@
         </div>
       </section>
 
+      <section class="color-lab panel" aria-labelledby="colorLabTitle">
+        <div class="panel__header">
+          <h3 id="colorLabTitle">Color Alignment Studio</h3>
+          <p class="muted">Drag the orbs to reshape the palette.</p>
+        </div>
+        <div class="color-lab__stage" id="colorLabStage">
+          <div class="color-ring"></div>
+          <button class="drag-orb drag-orb--primary" id="primaryOrb" aria-label="Move primary color point"></button>
+          <button class="drag-orb drag-orb--secondary" id="secondaryOrb" aria-label="Move secondary color point"></button>
+          <div class="ambient-glow" id="ambientGlow" aria-hidden="true"></div>
+        </div>
+        <div class="swatch-grid" id="swatchGrid"></div>
+      </section>
+
       <section class="details-grid">
         <div class="panel">
           <h3>Today’s Focus</h3>
